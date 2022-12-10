@@ -1,0 +1,24 @@
+$ cd /
+$ ls
+dir dir1
+dir dir2
+$ cd dir1
+$ ls
+38000000 file1.txt
+dir dir1_1
+$ ls
+38000000 file1.txt
+dir dir1_1
+$ cd ..
+$ cd dir1
+$ ls
+38000000 file1.txt
+dir dir1_1
+$ cd dir1_1
+$ ls
+1234 file2.txt
+$ cd ..
+$ cd ..
+$ cd dir2
+$ ls
+20000000 file3.txt
