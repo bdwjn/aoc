@@ -35,7 +35,7 @@ int main(void)
 		}
 
 		if (!fgets(line, 1024, stdin)) return -1; // "  Test: divisible by 13"
-    	monkeys[n].test = strtol(line+21, &p, 10);
+		monkeys[n].test = strtol(line+21, &p, 10);
 		mod *= monkeys[n].test;
 
 		if (!fgets(line, 1024, stdin)) return -1; // "    If true: throw to monkey 3"
