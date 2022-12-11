@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-// answer part 1: 5878
-// answer part 2: 2405
+// run with "make" to create an animation (ffmpeg required).
 
-#define LEN 10 // (2 for part 1, 10 for part 2)
+#define LEN 1000
 #define HASHSIZE 9999991LU
 
 int main(void) {
@@ -16,6 +15,8 @@ int main(void) {
 	unsigned int count=0, kx[LEN]={0}, ky[LEN]={0};
 
 	int frame=0;
+
+	unsigned char *bitmap = calloc(1, 420*200);
 
 	do {
 		int dir = *p;
@@ -38,7 +39,19 @@ int main(void) {
 			while (hash[idx] && hash[idx] != hval) idx = (idx+1) % HASHSIZE;
 			if (!hash[idx]) count++, hash[idx]=hval;
 		}
+
+		memset(bitmap, 0x30, 420*200);
+		for (int i=0; i<LEN; i++) {
+			if (kx[i]+193 >=0 && kx[i]+193 < 200 && ky[i]+80 >=0 && ky[i]+80<450) {
+				bitmap[ kx[i]+193 + 200LU * (ky[i]+80)] = 0xFF;
+			}
+		}
+
+		fwrite(bitmap, 1, 420*200, stdout);
+
 	} while (p-data-size);
 
-	printf("%d\n", count);
+	for (int i=0; i<40; i++) fwrite(bitmap, 1, 420*200, stdout); // repeat the frame for 1 second
+
+	fprintf(stderr, "count=%d\n", count);
 }
