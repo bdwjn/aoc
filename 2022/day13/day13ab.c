@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int cmp (const void *_p1, const void *_p2) {
-	const char *p1 = *(const char**)_p1, *p2 = *(const char**)_p2;
-
+int cmp (const char *p1, const char *p2) {
 	int depth1=0, depth2=0;
 
 	while (*p1 != '\n') {
@@ -44,23 +42,21 @@ int main(void)
 {
 	int idx=1, sum=0, mul=1, n=0;
 
-	char *lines[1000];
+	char line1[1000], line2[1000];
 
 	int two_idx = 1, six_idx = 2;
 	const char *two = "[[2]]\n", *six = "[[6]]\n";
 
 	do {
-		lines[n] = malloc(1000);
-		if (!fgets(lines[n++], 1000, stdin)) return 0;
-		lines[n] = malloc(1000);
-		if (!fgets(lines[n++], 1000, stdin)) return 0;
+		if (!fgets(line1, 1000, stdin)) return 0;
+		if (!fgets(line2, 1000, stdin)) return 0;
 
-		sum += cmp(lines + (n-2), lines + (n-1)) == -1 ? idx : 0;
+		sum += cmp(line1, line2) == -1 ? idx : 0;
 
-		if (cmp(lines + (n-2), &two) < 0) two_idx++, six_idx++;
-		else if (cmp(lines + (n-2), &six) < 0) six_idx ++;
-		if (cmp(lines + (n-1), &two) < 0) two_idx++, six_idx++;
-		else if (cmp(lines + (n-1), &six) < 0) six_idx ++;
+		if (cmp(line1, two) < 0) two_idx++, six_idx++;
+		else if (cmp(line1, six) < 0) six_idx ++;
+		if (cmp(line2, two) < 0) two_idx++, six_idx++;
+		else if (cmp(line2, six) < 0) six_idx ++;
 	} while (idx++, getchar() != EOF);
 
 	printf("Part 1: %d\n", sum);
