@@ -78,13 +78,15 @@ int main(void) {
 	}
 
 	/* matrix transposition */
-	for (int y=0; y<H-64; y+=64) {
+	for (int y=0; y<H; y+=64) {
+		int bh = H-y < 64 ? H-y : 64;
+
 		for (int x=0; x<W; x+=64) {
-			for (int i=0; i<64; i++) {
-				for (int j=0; j<64; j++) {
-					x+=i; y+=j;
-					tdata[tstride * x + y] = data[x + stride * y];
-					x-=i; y-=j;
+			int bw = W-x < 64 ? W-x : 64;
+
+			for (int i=0; i<bw; i++) {
+				for (int j=0; j<bh; j++) {
+					tdata[tstride * (x+i) + (y+j)] = data[(x+i) + stride * (y+j)];
 				}
 			}
 		}
@@ -101,15 +103,19 @@ int main(void) {
 	int best = 0;
 
 	/* viewing distances are now in 4 separate arrays, multiply them together to find the best tree */	
-	for (int y=0; y<H-64; y+=64) {
+	for (int y=0; y<H; y+=64) {
+		int bh = H-y < 64 ? H-y : 64;
+
 		for (int x=0; x<W; x+=64) {
-			for (int i=0; i<64; i++) {
+			int bw = W-x < 64 ? W-x : 64;
+
+			for (int i=0; i<bw; i++) {
 				__builtin_prefetch(count + x + 256 + stride * y);
 				__builtin_prefetch(count + x + 256 + stride * (H+y+i));
 				__builtin_prefetch(tcount + y + tstride * (x+i+32));
 				__builtin_prefetch(tcount + y + tstride * (x+i+W+32));
 
-				for (int j=0; j<64; j++) {
+				for (int j=0; j<bh; j++) {
 					int north = count[x + i + stride * (y+j)];
 					int south = count[x + i + stride * (y+j+H)];
 					int west  = tcount[y + j + tstride * (x+i)];
