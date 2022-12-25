@@ -46,7 +46,7 @@ int main(void) {
 		// clear possible positions for this minute
 		memset(cur, 0, W * H);
 		// add start cell, if there's no blizzard (top-left or bottom-right, depending on phase)
-		cur[0]   = phase==0 || phase==2 && !map[0];
+		cur[0]     = (phase==0 || phase==2) && !map[0];
 		cur[W*H-1] = phase==1 && !map[W*H-1];
 
 		// for each position we were in the last minute, check all 5 possible moves
