@@ -6,8 +6,8 @@ int main(void) {
 	while (op = getchar(), op != EOF) {
 		int arg = 0, optime;
 
-		if (op == 'a') scanf("ddx %d\n", &arg), optime = 2;
-		else           scanf("oop\n"),          optime = 1;
+		if (op == 'a') scanf("ddx %d\n", &arg) || 0, optime = 2;
+		else           scanf("oop\n") || 0,          optime = 1;
 
 		while (optime--) {
 			int cx = cycle % 40;

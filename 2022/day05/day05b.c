@@ -19,7 +19,7 @@ int main(void)
 					stacks[n][j] = j==0 ? line[4*n+1] : stacks[n][j-1];
 	}
 	
-	fgets(line, 100, stdin);
+	if (fgets(line, 100, stdin)) return -1;
 
 	int count, from, to;
 	while (scanf("move %d from %d to %d\n", &count, &from, &to) == 3) {
