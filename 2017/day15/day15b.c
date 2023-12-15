@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MIN(a,b) ((a) < (b) ? (a) : (b))
 
 #ifndef N
 #	define N    5000000
 #endif
 
-#define REPS 500 // high enough to minimize branch misses, low enough to fit 128 * REPS * (3/8) in cache
+#define REPS 500 // high enough to minimize branch misses, low enough to fit 256 * REPS * (3/8) + 8192 in cache
 
-extern uint32_t get_random(uint32_t prev[32], int n, uint32_t *out, uint32_t multiplier, uint32_t mask);
+extern uint32_t get_random(uint32_t prev[64], int n, uint32_t *out, uint32_t multiplier, uint32_t mask);
 extern uint32_t compare_low_16(uint32_t *a, uint32_t *b, uint32_t n);
 
 int main(void)
@@ -19,7 +19,7 @@ int main(void)
 	char line[1000];
 
 	static uint32_t a_out[64 * REPS], b_out[64  * REPS];
-	uint32_t nCompared = 0, nEqual = 0, b_size = 0, b_pos = 0, last_a = 16807, last_b = 48271;
+	uint32_t nCompared = 0, nEqual = 0, b_size = 0, b_pos = 0;
 
 	FILE *f = fopen("input", "r");
 	if (!f) {
@@ -39,7 +39,6 @@ int main(void)
 	while (nCompared < N) {
 		// generate REPS * 64 random numbers, mask them with & 0x3, store the multiples-of-4 in a_out[]
 		uint32_t a_pos = 0;
-		//uint32_t a_size = get_random(a, REPS, a_out, 0x618FB492 /* 16807^32 */, 0x3);
 		uint32_t a_size = get_random(a, REPS, a_out, 0x28d61248 /* 16807^64 */, 0x3);
 
 		// be sure not to overshoot N
@@ -52,7 +51,6 @@ int main(void)
 			// b_out buffer empty: generate more
 			while (b_pos == b_size) {
 				b_pos = 0;
-				//b_size = get_random(b, REPS, b_out, 0x351312D4 /* 48271^32 */, 0x7);
 				b_size = get_random(b, REPS, b_out, 0x2adc4dff /* 48271^64 */, 0x7);
 			}
 
@@ -61,9 +59,6 @@ int main(void)
 
 			a_pos += take;
 			b_pos += take;
-
-			last_a = a_out[a_pos-1];
-			last_b = b_out[b_pos-1];
 		}
 	}
 
