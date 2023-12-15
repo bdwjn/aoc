@@ -11,13 +11,11 @@ int main() {
 
 	for (int i=0; i<N; i++) {
 		do {
-			a *= 16807;
-			a %= 2147483647;
+			a = (a * 16807) % 0x7FFFFFFF;
 		} while (a & 3);
 
 		do {
-			b *= 48271;
-			b %= 2147483647;
+			b = (b * 48271) % 0x7FFFFFFF;
 		} while (b & 7);
 
 		c += (a & 0xFFFF) == (b & 0xFFFF);
