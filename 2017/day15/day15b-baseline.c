@@ -2,10 +2,14 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+#ifndef N
+#	define N    5000000
+#endif
+
 int main() {
 	uint64_t a = 883, b = 879, c = 0;
 
-	for (int i=0; i<5000000; i++) {
+	for (int i=0; i<N; i++) {
 		do {
 			a *= 16807;
 			a %= 2147483647;
