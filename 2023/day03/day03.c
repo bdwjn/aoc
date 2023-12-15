@@ -8,7 +8,7 @@ int partmul[1000][1000]   = {0};
 int main(void)
 {
 	char data[1000000];
-	int bytes = fread(data, 1, 1000000, fopen("input","r"));
+	int bytes = fread(data, 1, 1000000, fopen("input", "r"));
 
 	int W = strchr(data,'\n')-data;
 

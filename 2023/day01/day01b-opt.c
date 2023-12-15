@@ -20,9 +20,8 @@
 
 int main(void)
 {
-	FILE *f = fopen(FILENAME, "r");
-	unsigned char *data = malloc(1e9), *p=data;
-	uint64_t bytes = fread(data, 1, 1e9, f);
+	unsigned char *data = malloc(1<<30), *p=data;
+	uint64_t bytes = fread(data, 1, 1<<30, fopen(FILENAME, "r"));
 
 	unsigned char *eof = data + bytes;
 

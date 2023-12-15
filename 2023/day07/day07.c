@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <inttypes.h>
 
-int compare_uint64(const void *_a, const void *_b) {
+int compare_uint64(const void *_a, const void *_b)
+{
 	uint64_t a = *(uint64_t*)_a, b = *(uint64_t*)_b;
 	return (a<b) ? -1 : (a>b) ? 1 : 0;
 }
 
-int main(void) {
+int main(void)
+{
 	FILE *f = fopen("input", "r");
 	char line[1000];
 

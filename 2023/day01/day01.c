@@ -4,12 +4,14 @@
 int main(void)
 {
 	FILE *f = fopen("input", "r");
+	char line[10000];
 
 	const char *strs[] = {
 		"3one","3two","5three","4four","4five","3six","5seven","5eight","4nine"
 	};
 
-	char line[10000]; int part1=0, part2=0;
+	int part1=0, part2=0;
+	
 	while (fgets(line, 10000, f)) {
 		int first1 = -1, last1 = -1, first2 = -1, last2 = -1;
 

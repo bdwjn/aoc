@@ -3,10 +3,12 @@
 
 int main(void)
 {
+	FILE *f = fopen("input", "r");
 	char line[1000];
+
 	int part1 = 0, part2 = 0;
 
-	for (FILE *f = fopen("input", "r"); fgets(line, 1000, f);) {
+	while (fgets(line, 1000, f)) {
 		char *p;
 		int id = strtol(line+5, &p, 10), r=0, g=0, b=0;
 

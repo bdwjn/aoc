@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <math.h>
 
-int main(void) {
+int main(void)
+{
 	FILE *f = fopen("input","r");
 	char line[1000], *p;
 	
