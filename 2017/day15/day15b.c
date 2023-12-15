@@ -4,7 +4,10 @@
 
 #define MIN(a,b) ((a)<(b)?(a):(b))
 
-#define N    500000000
+#ifndef N
+#	define N    5000000
+#endif
+
 #define REPS 500 // high enough to minimize branch misses, low enough to fit 128 * REPS * (3/8) in cache
 
 extern uint32_t get_random(uint32_t prev[32], int n, uint32_t *out, uint32_t multiplier, uint32_t mask);
